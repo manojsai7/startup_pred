@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,600 +8,562 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET & BASE ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg-primary: #0a0a1a;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --bg-input: rgba(255, 255, 255, 0.06);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-focus: #6366f1;
-            --accent: #6366f1;
-            --accent-light: #818cf8;
-            --accent-glow: rgba(99, 102, 241, 0.25);
-            --success: #22c55e;
-            --success-bg: rgba(34, 197, 94, 0.08);
-            --success-border: rgba(34, 197, 94, 0.25);
-            --danger: #ef4444;
-            --danger-bg: rgba(239, 68, 68, 0.08);
-            --danger-border: rgba(239, 68, 68, 0.25);
-            --text: #e2e8f0;
-            --text-muted: #94a3b8;
-            --text-dim: #64748b;
-            --radius: 12px;
-            --radius-lg: 20px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-primary: #0a0a1a; --bg-card: rgba(255,255,255,0.04);
+            --bg-input: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.08);
+            --border-focus: #6366f1; --accent: #6366f1; --accent-light: #818cf8;
+            --accent-glow: rgba(99,102,241,0.25); --success: #22c55e;
+            --success-bg: rgba(34,197,94,0.08); --success-border: rgba(34,197,94,0.25);
+            --danger: #ef4444; --danger-bg: rgba(239,68,68,0.08); --danger-border: rgba(239,68,68,0.25);
+            --tip: #f59e0b; --tip-bg: rgba(245,158,11,0.08); --tip-border: rgba(245,158,11,0.2);
+            --text: #e2e8f0; --text-muted: #94a3b8; --text-dim: #64748b;
+            --radius: 12px; --radius-lg: 20px; --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            min-height: 100vh;
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ===== ANIMATED BACKGROUND ===== */
-        .bg-effects {
-            position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-        }
-        .bg-effects .orb {
-            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15;
-            animation: float 20s ease-in-out infinite;
-        }
-        .bg-effects .orb:nth-child(1) {
-            width: 600px; height: 600px; background: #6366f1; top: -10%; left: -10%;
-            animation-duration: 25s;
-        }
-        .bg-effects .orb:nth-child(2) {
-            width: 500px; height: 500px; background: #8b5cf6; bottom: -10%; right: -10%;
-            animation-duration: 30s; animation-delay: -5s;
-        }
-        .bg-effects .orb:nth-child(3) {
-            width: 400px; height: 400px; background: #06b6d4; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); animation-duration: 22s; animation-delay: -10s;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -40px) scale(1.05); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(40px, 30px) scale(1.02); }
-        }
-
-        /* ===== LAYOUT ===== */
-        .page-wrapper {
-            position: relative; z-index: 1;
-            max-width: 960px; margin: 0 auto; padding: 40px 24px 60px;
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            text-align: center; margin-bottom: 48px;
-            animation: fadeInDown 0.8s ease-out;
-        }
-        .header .logo {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 64px; height: 64px; border-radius: 18px; margin-bottom: 20px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
-            font-size: 28px;
-        }
-        .header h1 {
-            font-size: 2.25rem; font-weight: 800;
-            background: linear-gradient(135deg, #e2e8f0, #6366f1);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; letter-spacing: -0.5px; margin-bottom: 8px;
-        }
-        .header p {
-            color: var(--text-muted); font-size: 1.05rem; font-weight: 400;
-        }
-        .header .badge {
-            display: inline-block; margin-top: 14px; padding: 5px 14px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 999px; font-size: 0.78rem; color: var(--accent-light);
-            font-weight: 500; letter-spacing: 0.5px;
-        }
-
-        /* ===== CARDS ===== */
-        .card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 32px;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out both;
-        }
-        .card:nth-child(2) { animation-delay: 0.1s; }
-        .card:nth-child(3) { animation-delay: 0.2s; }
-        .card:nth-child(4) { animation-delay: 0.3s; }
-
-        .section-title {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 1.05rem; font-weight: 600; color: var(--text);
-            margin-bottom: 24px; padding-bottom: 14px;
-            border-bottom: 1px solid var(--border);
-        }
-        .section-title .icon {
-            display: flex; align-items: center; justify-content: center;
-            width: 34px; height: 34px; border-radius: 10px;
-            background: rgba(99, 102, 241, 0.12); font-size: 16px;
-        }
-
-        /* ===== FORM GRID ===== */
-        .form-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-        }
-        .form-group {
-            display: flex; flex-direction: column; gap: 6px;
-        }
-        .form-group label {
-            font-size: 0.82rem; font-weight: 500; color: var(--text-muted);
-            letter-spacing: 0.2px;
-        }
-        .form-group input,
-        .form-group select {
-            padding: 11px 14px; border-radius: var(--radius);
-            border: 1px solid var(--border); background: var(--bg-input);
-            color: var(--text); font-family: inherit; font-size: 0.92rem;
-            outline: none; transition: var(--transition);
-            -webkit-appearance: none;
-        }
-        .form-group input:hover, .form-group select:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-            background: rgba(255, 255, 255, 0.08);
-        }
+        body { font-family: 'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background: var(--bg-primary); min-height: 100vh; color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        .bg-effects { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .bg-effects .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12; animation: float 20s ease-in-out infinite; }
+        .bg-effects .orb:nth-child(1) { width: 600px; height: 600px; background: #6366f1; top: -10%; left: -10%; animation-duration: 25s; }
+        .bg-effects .orb:nth-child(2) { width: 500px; height: 500px; background: #8b5cf6; bottom: -10%; right: -10%; animation-duration: 30s; animation-delay: -5s; }
+        .bg-effects .orb:nth-child(3) { width: 350px; height: 350px; background: #06b6d4; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 22s; animation-delay: -10s; }
+        @keyframes float { 0%,100%{transform:translate(0,0) scale(1)} 25%{transform:translate(30px,-40px) scale(1.05)} 50%{transform:translate(-20px,20px) scale(0.95)} 75%{transform:translate(40px,30px) scale(1.02)} }
+        .page-wrapper { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 40px 24px 60px; }
+        .header { text-align: center; margin-bottom: 40px; animation: fadeInDown 0.8s ease-out; }
+        .header .logo { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; margin-bottom: 20px; background: linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow: 0 8px 32px rgba(99,102,241,0.3); font-size: 28px; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; background: linear-gradient(135deg,#e2e8f0,#6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .header p { color: var(--text-muted); font-size: 1.05rem; }
+        .header .badge { display: inline-block; margin-top: 14px; padding: 5px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; font-size: 0.78rem; color: var(--accent-light); font-weight: 500; letter-spacing: 0.5px; }
+        /* GUIDE */
+        .guide-box { background: var(--tip-bg); border: 1px solid var(--tip-border); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 24px; animation: fadeInUp 0.5s ease-out both; }
+        .guide-header { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 0.95rem; color: var(--tip); cursor: pointer; user-select: none; }
+        .guide-header .left { display: flex; align-items: center; gap: 10px; }
+        .guide-body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+        .guide-term .term { font-size: 0.82rem; font-weight: 600; color: #fbbf24; margin-bottom: 3px; }
+        .guide-term .def { font-size: 0.79rem; color: var(--text-muted); line-height: 1.5; }
+        /* CARDS */
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 32px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); margin-bottom: 20px; animation: fadeInUp 0.6s ease-out both; }
+        .section-title { display: flex; align-items: center; gap: 10px; font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+        .section-title .icon { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 10px; background: rgba(99,102,241,0.12); font-size: 16px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .label-row { display: flex; align-items: center; gap: 6px; }
+        .label-row label { font-size: 0.82rem; font-weight: 500; color: var(--text-muted); }
+        .field-hint { font-size: 0.74rem; color: var(--text-dim); line-height: 1.35; }
+        /* TOOLTIP */
+        .tip-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.35); color: var(--accent-light); font-size: 10px; font-weight: 700; cursor: pointer; flex-shrink: 0; user-select: none; transition: background 0.2s; }
+        .tip-btn:hover { background: rgba(99,102,241,0.4); }
+        .tip-popup { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #1a1a35; border: 1px solid rgba(99,102,241,0.35); border-radius: 10px; padding: 10px 14px; font-size: 0.78rem; color: var(--text); line-height: 1.55; width: 230px; z-index: 999; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        .tip-popup::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: rgba(99,102,241,0.35); }
+        .tip-btn:hover .tip-popup, .tip-btn:focus .tip-popup { opacity: 1; visibility: visible; }
+        .tip-popup strong { color: var(--accent-light); }
+        /* INPUTS */
+        .form-group input, .form-group select { padding: 11px 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-input); color: var(--text); font-family: inherit; font-size: 0.92rem; outline: none; transition: var(--transition); -webkit-appearance: none; }
+        .form-group input:hover, .form-group select:hover { border-color: rgba(255,255,255,0.15); }
+        .form-group input:focus, .form-group select:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--accent-glow); background: rgba(255,255,255,0.08); }
         .form-group input::placeholder { color: var(--text-dim); }
         .form-group select { cursor: pointer; }
         .form-group select option { background: #1e1e2e; color: var(--text); }
-
-        /* Toggle row for yes/no */
-        .toggle-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px;
-        }
-        .toggle-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 14px; border-radius: var(--radius);
-            background: var(--bg-input); border: 1px solid var(--border);
-            transition: var(--transition); cursor: pointer;
-        }
+        .inr-display { font-size: 0.76rem; color: #fbbf24; font-weight: 600; min-height: 18px; margin-top: 2px; }
+        .inr-table { background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; }
+        .inr-table-title { font-size: 0.78rem; font-weight: 600; color: #fbbf24; margin-bottom: 8px; }
+        .inr-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); gap: 5px; }
+        .inr-grid span { font-size: 0.75rem; color: var(--text-muted); }
+        /* CITY PICKER */
+        .city-label { font-size: 0.78rem; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; }
+        .city-picker { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .city-chip { padding: 5px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 500; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-muted); cursor: pointer; transition: var(--transition); white-space: nowrap; }
+        .city-chip:hover { border-color: var(--border-focus); color: var(--accent-light); background: rgba(99,102,241,0.08); }
+        /* TOGGLE */
+        .toggle-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(165px,1fr)); gap: 10px; }
+        .toggle-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: var(--radius); background: var(--bg-input); border: 1px solid var(--border); transition: var(--transition); }
         .toggle-item:hover { border-color: rgba(255,255,255,0.15); }
-        .toggle-item label {
-            font-size: 0.82rem; font-weight: 500; color: var(--text-muted);
-            cursor: pointer; user-select: none;
-        }
-        .toggle-switch {
-            position: relative; width: 42px; height: 24px; flex-shrink: 0;
-        }
+        .toggle-label-row { display: flex; align-items: center; gap: 5px; }
+        .toggle-item label { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); cursor: pointer; user-select: none; }
+        .toggle-switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-switch .slider {
-            position: absolute; inset: 0; border-radius: 999px; cursor: pointer;
-            background: rgba(255,255,255,0.1); transition: var(--transition);
-        }
-        .toggle-switch .slider::before {
-            content: ''; position: absolute; left: 3px; top: 3px;
-            width: 18px; height: 18px; border-radius: 50%;
-            background: #94a3b8; transition: var(--transition);
-        }
-        .toggle-switch input:checked + .slider {
-            background: var(--accent);
-        }
-        .toggle-switch input:checked + .slider::before {
-            transform: translateX(18px); background: #fff;
-        }
-
-        /* ===== PREDICT BUTTON ===== */
-        .btn-predict {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 16px 24px; margin-top: 10px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #fff; border: none; border-radius: var(--radius);
-            font-family: inherit; font-size: 1.05rem; font-weight: 600;
-            cursor: pointer; transition: var(--transition);
-            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.25);
-            letter-spacing: 0.3px;
-        }
-        .btn-predict:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
-        }
+        .toggle-switch .slider { position: absolute; inset: 0; border-radius: 999px; cursor: pointer; background: rgba(255,255,255,0.1); transition: var(--transition); }
+        .toggle-switch .slider::before { content: ''; position: absolute; left: 3px; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: #94a3b8; transition: var(--transition); }
+        .toggle-switch input:checked + .slider { background: var(--accent); }
+        .toggle-switch input:checked + .slider::before { transform: translateX(18px); background: #fff; }
+        /* BUTTON */
+        .btn-predict { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px 24px; margin-top: 8px; background: linear-gradient(135deg,#6366f1,#8b5cf6); color: #fff; border: none; border-radius: var(--radius); font-family: inherit; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 4px 24px rgba(99,102,241,0.25); }
+        .btn-predict:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(99,102,241,0.4); }
         .btn-predict:active { transform: translateY(0); }
-        .btn-predict:disabled {
-            opacity: 0.7; cursor: not-allowed; transform: none !important;
-        }
-        .btn-predict .spinner {
-            display: none; width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3);
-            border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite;
-        }
+        .btn-predict:disabled { opacity: 0.7; cursor: not-allowed; transform: none !important; }
+        .btn-predict .spinner { display: none; width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
         .btn-predict.loading .spinner { display: block; }
         .btn-predict.loading .btn-text { display: none; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ===== RESULT ===== */
-        .result-section {
-            display: none; animation: fadeInUp 0.5s ease-out both;
-        }
-        .result-section.visible { display: block; }
-
-        .result-card {
-            position: relative; overflow: hidden; text-align: center;
-            padding: 40px 32px; border-radius: var(--radius-lg);
-            animation: scaleIn 0.4s ease-out both;
-        }
-        .result-card.success {
-            background: var(--success-bg); border: 1px solid var(--success-border);
-        }
-        .result-card.failure {
-            background: var(--danger-bg); border: 1px solid var(--danger-border);
-        }
-        .result-card .result-icon {
-            font-size: 48px; margin-bottom: 12px;
-            animation: popIn 0.5s ease-out 0.2s both;
-        }
-        .result-card .result-label {
-            font-size: 0.82rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 6px;
-        }
+        /* RESULT */
+        .result-section { display: none; }
+        .result-section.visible { display: block; animation: fadeInUp 0.5s ease-out both; }
+        .result-card { position: relative; overflow: hidden; text-align: center; padding: 40px 32px; border-radius: var(--radius-lg); animation: scaleIn 0.4s ease-out both; }
+        .result-card.success { background: var(--success-bg); border: 1px solid var(--success-border); }
+        .result-card.failure { background: var(--danger-bg); border: 1px solid var(--danger-border); }
+        .result-card .result-icon { font-size: 48px; margin-bottom: 12px; animation: popIn 0.5s ease-out 0.2s both; }
+        .result-card .result-label { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
         .result-card.success .result-label { color: var(--success); }
         .result-card.failure .result-label { color: var(--danger); }
-
-        .result-card .result-title {
-            font-size: 1.75rem; font-weight: 800; margin-bottom: 16px;
-        }
+        .result-card .result-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 12px; }
         .result-card.success .result-title { color: var(--success); }
         .result-card.failure .result-title { color: var(--danger); }
-
-        /* Confidence gauge */
-        .confidence-gauge {
-            position: relative; width: 140px; height: 70px; margin: 0 auto 16px;
-            overflow: hidden;
-        }
-        .confidence-gauge .gauge-bg, .confidence-gauge .gauge-fill {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            width: 140px; height: 140px; border-radius: 50%;
-            border: 12px solid transparent; clip-path: inset(50% 0 0 0);
-        }
-        .confidence-gauge .gauge-bg { border-color: rgba(255,255,255,0.08); }
-        .confidence-gauge .gauge-fill {
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center center;
-        }
-        .result-card.success .gauge-fill { border-color: var(--success); }
-        .result-card.failure .gauge-fill { border-color: var(--danger); }
-
-        .confidence-value {
-            font-size: 2rem; font-weight: 800; line-height: 1;
-        }
-        .confidence-label {
-            font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;
-        }
-        .result-message {
-            color: var(--text-muted); font-size: 0.95rem; margin-top: 12px;
-            max-width: 400px; margin-left: auto; margin-right: auto;
-        }
-
-        .result-card .shimmer {
-            position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            text-align: center; padding: 32px 0 0; color: var(--text-dim);
-            font-size: 0.82rem; border-top: 1px solid var(--border); margin-top: 16px;
-        }
+        .confidence-value { font-size: 2.2rem; font-weight: 800; }
+        .confidence-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+        .result-message { color: var(--text-muted); font-size: 0.95rem; margin-top: 12px; max-width: 420px; margin-left: auto; margin-right: auto; }
+        .result-card .shimmer { position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent); animation: shimmer 3s ease-in-out infinite; }
+        .footer { text-align: center; padding: 28px 0 0; color: var(--text-dim); font-size: 0.82rem; border-top: 1px solid var(--border); margin-top: 16px; }
         .footer a { color: var(--accent-light); text-decoration: none; }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0); }
-            70% { transform: scale(1.15); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes shimmer {
-            0% { left: -100%; }
-            50%, 100% { left: 100%; }
-        }
-
-        /* ===== RESPONSIVE ===== */
+        @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes scaleIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+        @keyframes popIn { 0%{opacity:0;transform:scale(0)} 70%{transform:scale(1.15)} 100%{opacity:1;transform:scale(1)} }
+        @keyframes shimmer { 0%{left:-100%} 50%,100%{left:100%} }
         @media (max-width: 640px) {
             .page-wrapper { padding: 24px 16px 40px; }
             .header h1 { font-size: 1.75rem; }
-            .card { padding: 24px 18px; }
+            .card { padding: 20px 16px; }
             .form-grid { grid-template-columns: 1fr; }
             .toggle-grid { grid-template-columns: 1fr 1fr; }
+            .guide-body { grid-template-columns: 1fr; }
             .result-card { padding: 28px 20px; }
-            .result-card .result-title { font-size: 1.35rem; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-effects">
-        <div class="orb"></div><div class="orb"></div><div class="orb"></div>
+<div class="bg-effects"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">&#x1F680;</div>
+        <h1>Prosperity Prognosticator</h1>
+        <p>ML-powered startup success prediction system</p>
+        <span class="badge">RANDOM FOREST &nbsp;&middot;&nbsp; 79% ACCURACY</span>
     </div>
 
-    <div class="page-wrapper">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo">&#x1F680;</div>
-            <h1>Prosperity Prognosticator</h1>
-            <p>ML-powered startup success prediction system</p>
-            <span class="badge">RANDOM FOREST CLASSIFIER</span>
+    <!-- GLOSSARY -->
+    <div class="guide-box">
+        <div class="guide-header" id="guideToggle" onclick="toggleGuide()">
+            <span class="left">&#x1F4D6;&nbsp; Confused about the terms? Click here for a quick guide</span>
+            <span id="guideChevron" style="font-size:0.8rem">&#x25B2;</span>
         </div>
-
-        <form id="predictionForm" autocomplete="off">
-            <!-- SECTION 1: COMPANY METRICS -->
-            <div class="card">
-                <div class="section-title">
-                    <span class="icon">&#x1F4CA;</span> Company Metrics
-                </div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Age at First Funding (years)</label>
-                        <input type="number" step="0.1" name="age_first_funding_year" placeholder="e.g. 2.5" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Age at Last Funding (years)</label>
-                        <input type="number" step="0.1" name="age_last_funding_year" placeholder="e.g. 5.0" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Age at First Milestone (years)</label>
-                        <input type="number" step="0.1" name="age_first_milestone_year" placeholder="e.g. 1.5" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Age at Last Milestone (years)</label>
-                        <input type="number" step="0.1" name="age_last_milestone_year" placeholder="e.g. 4.0" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Number of Relationships</label>
-                        <input type="number" name="relationships" placeholder="e.g. 10" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Milestones Achieved</label>
-                        <input type="number" name="milestones" placeholder="e.g. 4" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Average Participants per Round</label>
-                        <input type="number" step="0.1" name="avg_participants" placeholder="e.g. 3.5" required>
-                    </div>
-                </div>
+        <div class="guide-body" id="guideBody">
+            <div class="guide-term">
+                <div class="term">Age at First / Last Funding</div>
+                <div class="def">How many years <em>after your founding date</em> you got your first (or most recent) funding.<br>Example: Founded 2019, first cheque in 2021 &rarr; enter <strong>2</strong>.</div>
             </div>
-
-            <!-- SECTION 2: FUNDING INFO -->
-            <div class="card">
-                <div class="section-title">
-                    <span class="icon">&#x1F4B0;</span> Funding Information
-                </div>
-                <div class="form-grid" style="margin-bottom: 20px;">
-                    <div class="form-group">
-                        <label>Total Funding (USD)</label>
-                        <input type="number" name="funding_total_usd" placeholder="e.g. 5000000" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Number of Funding Rounds</label>
-                        <input type="number" name="funding_rounds" placeholder="e.g. 3" required>
-                    </div>
-                </div>
-                <div class="toggle-grid">
-                    <div class="toggle-item">
-                        <label for="t_vc">VC Funding</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_vc" data-field="has_VC" checked>
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_angel">Angel Investor</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_angel" data-field="has_angel" checked>
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_rA">Round A</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_rA" data-field="has_roundA" checked>
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_rB">Round B</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_rB" data-field="has_roundB">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_rC">Round C</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_rC" data-field="has_roundC">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_rD">Round D</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_rD" data-field="has_roundD">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                </div>
+            <div class="guide-term">
+                <div class="term">Age at First / Last Milestone</div>
+                <div class="def">Years from founding to your first/latest major milestone &mdash; product launch, first big client, 1K users, revenue target, etc.</div>
             </div>
-
-            <!-- SECTION 3: LOCATION -->
-            <div class="card">
-                <div class="section-title">
-                    <span class="icon">&#x1F4CD;</span> Location Details
-                </div>
-                <div class="form-grid" style="margin-bottom: 20px;">
-                    <div class="form-group">
-                        <label>Latitude</label>
-                        <input type="number" step="0.01" name="latitude" placeholder="e.g. 37.77" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Longitude</label>
-                        <input type="number" step="0.01" name="longitude" placeholder="e.g. -122.41" required>
-                    </div>
-                </div>
-                <div class="toggle-grid">
-                    <div class="toggle-item">
-                        <label for="t_ca">California</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_ca" data-field="is_CA" checked>
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_ny">New York</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_ny" data-field="is_NY">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_ma">Massachusetts</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_ma" data-field="is_MA">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_tx">Texas</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_tx" data-field="is_TX">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_other">Other State</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_other" data-field="is_otherstate">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                    <div class="toggle-item">
-                        <label for="t_top500">Top 500 Company</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="t_top500" data-field="is_top500">
-                            <span class="slider"></span>
-                        </div>
-                    </div>
-                </div>
+            <div class="guide-term">
+                <div class="term">Number of Relationships</div>
+                <div class="def">Count <strong>all</strong> formal business connections: investors, advisors, board members, strategic partners, co-investors. Add them all up.</div>
             </div>
-
-            <!-- PREDICT BUTTON -->
-            <button type="submit" class="btn-predict" id="predictBtn">
-                <span class="btn-text">&#x1F52E; Predict Startup Success</span>
-                <span class="spinner"></span>
-            </button>
-        </form>
-
-        <!-- RESULT -->
-        <div class="result-section" id="resultSection">
-            <div class="card" style="padding: 0; background: transparent; border: none; backdrop-filter: none;">
-                <div class="result-card" id="resultCard">
-                    <div class="shimmer"></div>
-                    <div class="result-icon" id="resultIcon"></div>
-                    <div class="result-label" id="resultLabel"></div>
-                    <div class="result-title" id="resultTitle"></div>
-                    <div class="confidence-value" id="confValue"></div>
-                    <div class="confidence-label">Confidence Score</div>
-                    <p class="result-message" id="resultMsg"></p>
-                </div>
+            <div class="guide-term">
+                <div class="term">Milestones Achieved</div>
+                <div class="def">Total count of significant achievements: each product launch, user target hit, market expansion, partnership signed, revenue goal &mdash; each counts as 1.</div>
             </div>
-        </div>
-
-        <!-- FOOTER -->
-        <div class="footer">
-            <p>Prosperity Prognosticator &mdash; Built with Random Forest &amp; Flask</p>
+            <div class="guide-term">
+                <div class="term">Avg Participants per Round</div>
+                <div class="def">Average number of investors per funding round.<br>Round A had 2 investors, Round B had 4 &rarr; avg = <strong>3</strong>. Only one round with 3 investors &rarr; enter <strong>3</strong>.</div>
+            </div>
+            <div class="guide-term">
+                <div class="term">Total Funding (USD)</div>
+                <div class="def">Sum of ALL money raised across every round, in US Dollars. Use the INR reference table to convert your Indian funding amount.</div>
+            </div>
+            <div class="guide-term">
+                <div class="term">Is Top 500</div>
+                <div class="def">Has your startup appeared on a notable ranking? (Crunchbase Top 500, YC batch, Inc. 500, Forbes list, etc.) Turn ON only if yes.</div>
+            </div>
+            <div class="guide-term">
+                <div class="term">Latitude &amp; Longitude</div>
+                <div class="def">Your HQ city coordinates. Click a city chip below the inputs, or Google Maps &rarr; right-click your city &rarr; copy the two numbers shown.</div>
+            </div>
         </div>
     </div>
 
-    <script>
-        const form = document.getElementById('predictionForm');
+    <form id="predictionForm" autocomplete="off">
+
+    <!-- SECTION 1: COMPANY METRICS -->
+    <div class="card">
+        <div class="section-title"><span class="icon">&#x1F4CA;</span> Company Metrics</div>
+        <div class="form-grid">
+
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Age at First Funding (years)</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Years from founding &rarr; first funding.</strong><br>Founded 2019, funded 2021 &rarr; enter <strong>2</strong>.<br>Funded in the same year? Enter <strong>0</strong>.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Years between your founding date and the first investor cheque</span>
+                <input type="number" step="0.1" name="age_first_funding_year" placeholder="e.g. 2  (founded 2019, funded 2021)" required>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Age at Last Funding (years)</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Years from founding &rarr; most recent funding.</strong><br>Founded 2019, last funded 2024 &rarr; enter <strong>5</strong>.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Years between your founding date and the most recent funding</span>
+                <input type="number" step="0.1" name="age_last_funding_year" placeholder="e.g. 5  (founded 2019, last funded 2024)" required>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Age at First Milestone (years)</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Years from founding &rarr; first big win.</strong><br>Milestones: product launch, first paying customer, first partnership, first 100 users, etc.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Years from founding to your first product launch / first customer</span>
+                <input type="number" step="0.1" name="age_first_milestone_year" placeholder="e.g. 1  (launched product 1 yr after founding)" required>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Age at Last Milestone (years)</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Years from founding &rarr; most recent milestone.</strong><br>Hit a revenue target 4 years after founding? Enter <strong>4</strong>.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Years from founding to your most recent achievement</span>
+                <input type="number" step="0.1" name="age_last_milestone_year" placeholder="e.g. 4" required>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Number of Relationships</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Count ALL formal business connections:</strong><br>&bull; Investors &amp; VCs<br>&bull; Advisors &amp; mentors<br>&bull; Board members<br>&bull; Strategic partners &amp; co-founders<br><br>Add them all. Even 3&ndash;5 is normal for early startups.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Investors + advisors + board members + strategic partners (total count)</span>
+                <input type="number" name="relationships" placeholder="e.g. 8  (3 investors + 2 advisors + 3 partners)" required>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Milestones Achieved</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Count each major milestone as 1:</strong><br>&bull; Product launched<br>&bull; First paying customer<br>&bull; 1K / 10K users hit<br>&bull; Partnership signed<br>&bull; New market entered<br>&bull; Revenue target hit</div>
+                    </span>
+                </div>
+                <span class="field-hint">Total count: each launch, user target, partnership = 1 milestone</span>
+                <input type="number" name="milestones" placeholder="e.g. 4" required>
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / -1; max-width: 50%;">
+                <div class="label-row">
+                    <label>Avg Participants per Round</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Average no. of investors per round.</strong><br>Seed: 2 investors, Series A: 4 &rarr; avg = <strong>3</strong>.<br>Only 1 round with 3 investors &rarr; enter <strong>3</strong>.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Average number of investors who joined each funding round</span>
+                <input type="number" step="0.1" name="avg_participants" placeholder="e.g. 3  (seed: 2 investors, Series A: 4  avg 3)" required>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 2: FUNDING -->
+    <div class="card">
+        <div class="section-title"><span class="icon">&#x1F4B0;</span> Funding Information</div>
+
+        <div class="form-grid" style="margin-bottom: 20px;">
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Total Funding Raised (USD)</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Grand total raised across ALL rounds in USD.</strong><br>Use the INR table below to convert &mdash; enter the USD equivalent here.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Enter in USD &mdash; live INR equivalent shown below</span>
+                <input type="number" name="funding_total_usd" id="fundingUSD" placeholder="e.g. 500000  (= ~Rs. 4.2 Crore)" required oninput="updateINR(this.value)">
+                <div class="inr-display" id="inrDisplay"></div>
+            </div>
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Number of Funding Rounds</label>
+                    <span class="tip-btn" tabindex="0">?
+                        <div class="tip-popup"><strong>Total distinct rounds completed.</strong><br>Seed = 1 round. Seed + Series A = 2 rounds. Pre-Seed + Seed + Series A = 3 rounds.</div>
+                    </span>
+                </div>
+                <span class="field-hint">Count each distinct round: Seed, Pre-A, Series A, B, C&hellip;</span>
+                <input type="number" name="funding_rounds" placeholder="e.g. 3" required>
+            </div>
+        </div>
+
+        <div class="inr-table">
+            <div class="inr-table-title">&#x1F1EE;&#x1F1F3; INR Quick Reference &nbsp;&mdash;&nbsp; @ Rs. 84 per $1 USD</div>
+            <div class="inr-grid">
+                <span>$50K &nbsp;&asymp; Rs. <strong>42 Lakh</strong></span>
+                <span>$100K &asymp; Rs. <strong>84 Lakh</strong></span>
+                <span>$250K &asymp; Rs. <strong>2.1 Cr</strong></span>
+                <span>$500K &asymp; Rs. <strong>4.2 Cr</strong></span>
+                <span>$1M &nbsp;&asymp; Rs. <strong>8.4 Cr</strong></span>
+                <span>$2M &nbsp;&asymp; Rs. <strong>16.8 Cr</strong></span>
+                <span>$5M &nbsp;&asymp; Rs. <strong>42 Cr</strong></span>
+                <span>$10M &asymp; Rs. <strong>84 Cr</strong></span>
+                <span>$25M &asymp; Rs. <strong>210 Cr</strong></span>
+                <span>$50M &asymp; Rs. <strong>420 Cr</strong></span>
+                <span>$100M &asymp; Rs. <strong>840 Cr</strong></span>
+                <span>$500M &asymp; Rs. <strong>4200 Cr</strong></span>
+            </div>
+        </div>
+
+        <div style="font-size:0.8rem;font-weight:500;color:var(--text-muted);margin-bottom:12px;">Which funding types apply to your startup? (toggle on what you have)</div>
+        <div class="toggle-grid">
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_vc">VC Funding</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Venture Capital</strong><br>Institutional funding from a VC firm (Sequoia, Accel, Nexus, etc.).</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_vc" data-field="has_VC" checked><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_angel">Angel Investor</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Angel Investor</strong><br>An individual (not a firm) who invested their personal money into your startup.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_angel" data-field="has_angel" checked><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_rA">Series A</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Series A round</strong><br>First significant VC round (~$2M&ndash;$15M / Rs. 17&ndash;126 Cr). Usually after product-market fit.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_rA" data-field="has_roundA" checked><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_rB">Series B</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Series B round</strong><br>Growth-stage funding (~$10M&ndash;$50M / Rs. 84&ndash;420 Cr) to scale operations.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_rB" data-field="has_roundB"><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_rC">Series C</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Series C round</strong><br>Late-stage expansion (~$50M+ / Rs. 420 Cr+). Pre-IPO or major acquisitions.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_rC" data-field="has_roundC"><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_rD">Series D+</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Series D or later</strong><br>Very late-stage ($100M+ / Rs. 840 Cr+). Usually pre-IPO.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_rD" data-field="has_roundD"><span class="slider"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: LOCATION -->
+    <div class="card">
+        <div class="section-title">
+            <span class="icon">&#x1F4CD;</span> Location Details
+            <span style="font-size:0.72rem;font-weight:400;color:var(--text-dim);margin-left:auto;">Model trained on US data &mdash; Indian startups: pick nearest equivalent or use city chips</span>
+        </div>
+
+        <div class="city-label">&#x26A1; Quick-fill &mdash; click a city to auto-fill coordinates &amp; state</div>
+        <div class="city-picker">
+            <span class="city-chip" onclick="fillCity(37.77,-122.41,'is_CA')">&#x1F1FA;&#x1F1F8; San Francisco</span>
+            <span class="city-chip" onclick="fillCity(40.71,-74.01,'is_NY')">&#x1F1FA;&#x1F1F8; New York</span>
+            <span class="city-chip" onclick="fillCity(42.36,-71.06,'is_MA')">&#x1F1FA;&#x1F1F8; Boston</span>
+            <span class="city-chip" onclick="fillCity(30.27,-97.74,'is_TX')">&#x1F1FA;&#x1F1F8; Austin</span>
+            <span class="city-chip" onclick="fillCity(47.61,-122.33,'other')">&#x1F1FA;&#x1F1F8; Seattle</span>
+            <span class="city-chip" onclick="fillCity(12.97,77.59,'other')">&#x1F1EE;&#x1F1F3; Bengaluru</span>
+            <span class="city-chip" onclick="fillCity(19.08,72.88,'other')">&#x1F1EE;&#x1F1F3; Mumbai</span>
+            <span class="city-chip" onclick="fillCity(28.63,77.22,'other')">&#x1F1EE;&#x1F1F3; Delhi NCR</span>
+            <span class="city-chip" onclick="fillCity(22.57,88.36,'other')">&#x1F1EE;&#x1F1F3; Kolkata</span>
+            <span class="city-chip" onclick="fillCity(17.39,78.49,'other')">&#x1F1EE;&#x1F1F3; Hyderabad</span>
+            <span class="city-chip" onclick="fillCity(13.08,80.27,'other')">&#x1F1EE;&#x1F1F3; Chennai</span>
+            <span class="city-chip" onclick="fillCity(23.02,72.57,'other')">&#x1F1EE;&#x1F1F3; Ahmedabad</span>
+            <span class="city-chip" onclick="fillCity(18.52,73.86,'other')">&#x1F1EE;&#x1F1F3; Pune</span>
+        </div>
+
+        <div class="form-grid" style="margin-bottom: 20px;">
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Latitude</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Latitude of your HQ city.</strong><br>Use city chips above <em>or</em> open Google Maps &rarr; right-click your city &rarr; first number shown (e.g. 12.97 for Bengaluru).</div></span>
+                </div>
+                <span class="field-hint">Use city chip above, or Google Maps &rarr; right-click &rarr; first number</span>
+                <input type="number" step="0.0001" name="latitude" id="latInput" placeholder="e.g. 12.97  (Bengaluru) or 37.77 (SF)" required>
+            </div>
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Longitude</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Longitude of your HQ city.</strong><br>Google Maps &rarr; right-click &rarr; second number (e.g. 77.59 for Bengaluru, -122.41 for SF).</div></span>
+                </div>
+                <span class="field-hint">Use city chip above, or Google Maps &rarr; right-click &rarr; second number</span>
+                <input type="number" step="0.0001" name="longitude" id="lngInput" placeholder="e.g. 77.59  (Bengaluru) or -122.41 (SF)" required>
+            </div>
+        </div>
+
+        <div style="font-size:0.8rem;font-weight:500;color:var(--text-muted);margin-bottom:12px;">Where is your startup based? (select the one that applies)</div>
+        <div class="toggle-grid">
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_ca">California, USA</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup">Silicon Valley &mdash; San Francisco, San Jose, Palo Alto.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_ca" data-field="is_CA"><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_ny">New York, USA</label>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_ny" data-field="is_NY"><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_ma">Massachusetts, USA</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup">Greater Boston tech ecosystem.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_ma" data-field="is_MA"><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_tx">Texas, USA</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup">Austin / Dallas / Houston tech scene.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_tx" data-field="is_TX"><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_other">India / Other</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>Based in India or outside the above US states?</strong><br>Select this. The model groups all non-CA/NY/MA/TX locations here.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_other" data-field="is_otherstate" checked><span class="slider"></span></div>
+            </div>
+            <div class="toggle-item">
+                <div class="toggle-label-row">
+                    <label for="t_top500">Top 500 List</label>
+                    <span class="tip-btn" tabindex="0">?<div class="tip-popup"><strong>On a major startup ranking?</strong><br>e.g. Crunchbase Top 500, YC batch, Forbes list, Inc. 500. Turn ON only if you have a listing.</div></span>
+                </div>
+                <div class="toggle-switch"><input type="checkbox" id="t_top500" data-field="is_top500"><span class="slider"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PREDICT BUTTON -->
+    <button type="submit" class="btn-predict" id="predictBtn">
+        <span class="btn-text">&#x1F52E;&nbsp; Predict My Startup's Success</span>
+        <span class="spinner"></span>
+    </button>
+
+    </form>
+
+    <!-- RESULT -->
+    <div class="result-section" id="resultSection">
+        <div class="result-card" id="resultCard">
+            <div class="shimmer"></div>
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-label" id="resultLabel"></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="confidence-value" id="confValue"></div>
+            <div class="confidence-label">Confidence Score</div>
+            <p class="result-message" id="resultMsg"></p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Prosperity Prognosticator &mdash; Random Forest + Flask &nbsp;|&nbsp; Dataset: <a href="https://www.kaggle.com/datasets/manishkc06/startup-success-prediction" target="_blank">Kaggle Startups</a></p>
+    </div>
+
+</div>
+
+<script>
+    const USD_TO_INR = 84;
+
+    function updateINR(val) {
+        const el = document.getElementById('inrDisplay');
+        const n = parseFloat(val);
+        if (!val || isNaN(n) || n <= 0) { el.textContent = ''; return; }
+        const inr = n * USD_TO_INR;
+        let label = '';
+        if (inr >= 1e7) label = 'Rs. ' + (inr / 1e7).toFixed(2) + ' Crore';
+        else if (inr >= 1e5) label = 'Rs. ' + (inr / 1e5).toFixed(2) + ' Lakh';
+        else label = 'Rs. ' + Math.round(inr).toLocaleString('en-IN');
+        el.textContent = '\u2248 ' + label;
+    }
+
+    function fillCity(lat, lng, stateField) {
+        document.getElementById('latInput').value = lat;
+        document.getElementById('lngInput').value = lng;
+        ['is_CA','is_NY','is_MA','is_TX','is_otherstate'].forEach(f => {
+            const cb = document.querySelector('[data-field="' + f + '"]');
+            if (cb) cb.checked = false;
+        });
+        const target = stateField === 'other' ? 'is_otherstate' : stateField;
+        const cb = document.querySelector('[data-field="' + target + '"]');
+        if (cb) cb.checked = true;
+    }
+
+    function toggleGuide() {
+        const body = document.getElementById('guideBody');
+        const hdr = document.getElementById('guideToggle');
+        const chev = document.getElementById('guideChevron');
+        const open = body.style.display !== 'none';
+        body.style.display = open ? 'none' : 'grid';
+        chev.innerHTML = open ? '&#x25BC;' : '&#x25B2;';
+    }
+
+    document.querySelectorAll('.toggle-item').forEach(item => {
+        item.addEventListener('click', e => {
+            if (e.target.tagName === 'INPUT' || e.target.closest('.tip-btn')) return;
+            const cb = item.querySelector('input[type="checkbox"]');
+            if (cb) cb.checked = !cb.checked;
+        });
+    });
+
+    document.getElementById('predictionForm').addEventListener('submit', async e => {
+        e.preventDefault();
         const btn = document.getElementById('predictBtn');
-        const resultSection = document.getElementById('resultSection');
+        const rs = document.getElementById('resultSection');
+        btn.classList.add('loading'); btn.disabled = true;
+        rs.classList.remove('visible');
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            btn.classList.add('loading');
-            btn.disabled = true;
-            resultSection.classList.remove('visible');
-
-            // Build payload
-            const data = {};
-            // Numeric inputs
-            form.querySelectorAll('input[type="number"]').forEach(inp => {
-                data[inp.name] = parseFloat(inp.value) || 0;
-            });
-            // Toggle checkboxes
-            form.querySelectorAll('.toggle-switch input[type="checkbox"]').forEach(cb => {
-                data[cb.dataset.field] = cb.checked ? 1 : 0;
-            });
-
-            try {
-                const res = await fetch('/predict', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                const result = await res.json();
-
-                const card = document.getElementById('resultCard');
-                const icon = document.getElementById('resultIcon');
-                const label = document.getElementById('resultLabel');
-                const title = document.getElementById('resultTitle');
-                const conf = document.getElementById('confValue');
-                const msg = document.getElementById('resultMsg');
-
-                const isSuccess = result.prediction === 'SUCCESS';
-                card.className = 'result-card ' + (isSuccess ? 'success' : 'failure');
-                icon.textContent = isSuccess ? '\u2705' : '\u274C';
-                label.textContent = isSuccess ? 'HIGH POTENTIAL' : 'HIGH RISK';
-                title.textContent = isSuccess ? 'Likely to Succeed' : 'Likely to Fail';
-                conf.textContent = result.confidence + '%';
-                conf.style.color = isSuccess ? 'var(--success)' : 'var(--danger)';
-                msg.textContent = result.message;
-
-                resultSection.classList.add('visible');
-                setTimeout(() => {
-                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            } catch (err) {
-                alert('Prediction failed: ' + err.message);
-            } finally {
-                btn.classList.remove('loading');
-                btn.disabled = false;
-            }
+        const data = {};
+        document.querySelectorAll('input[type="number"]').forEach(inp => {
+            if (inp.name) data[inp.name] = parseFloat(inp.value) || 0;
+        });
+        document.querySelectorAll('.toggle-switch input').forEach(cb => {
+            data[cb.dataset.field] = cb.checked ? 1 : 0;
         });
 
-        // Subtle hover effect on toggle items
-        document.querySelectorAll('.toggle-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (e.target.tagName !== 'INPUT') {
-                    const cb = item.querySelector('input[type="checkbox"]');
-                    cb.checked = !cb.checked;
-                    cb.dispatchEvent(new Event('change'));
-                }
+        try {
+            const res = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             });
-        });
-    </script>
+            const result = await res.json();
+            const card = document.getElementById('resultCard');
+            const ok = result.prediction === 'SUCCESS';
+            card.className = 'result-card ' + (ok ? 'success' : 'failure');
+            document.getElementById('resultIcon').textContent = ok ? '\u2705' : '\u274C';
+            document.getElementById('resultLabel').textContent = ok ? 'HIGH POTENTIAL' : 'HIGH RISK';
+            document.getElementById('resultTitle').textContent = ok ? 'Likely to Succeed' : 'Likely to Fail';
+            const cv = document.getElementById('confValue');
+            cv.textContent = result.confidence + '%';
+            cv.style.color = ok ? 'var(--success)' : 'var(--danger)';
+            document.getElementById('resultMsg').textContent = result.message;
+            rs.classList.add('visible');
+            setTimeout(() => rs.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        } catch (err) {
+            alert('Prediction failed: ' + err.message);
+        } finally {
+            btn.classList.remove('loading'); btn.disabled = false;
+        }
+    });
+</script>
 </body>
 </html>
