@@ -13,6 +13,15 @@ You fill in a short form about your startup — how long it took to get funded, 
 No jargon. Every field has a plain-English tooltip explaining exactly what to enter. Indian founders get an INR conversion table and city quick-fill buttons.
 
 ---
+<img width="1874" height="940" alt="image" src="https://github.com/user-attachments/assets/748f7b0d-cf61-49d0-9441-b4730f040d33" />
+<img width="1201" height="818" alt="image" src="https://github.com/user-attachments/assets/22d911bf-98f5-4d79-b11b-8abe29a3c1db" />
+
+<img width="1868" height="934" alt="image" src="https://github.com/user-attachments/assets/4df274e7-eff4-4ea6-9b69-39efaa493f9c" />
+
+<img width="1487" height="929" alt="image" src="https://github.com/user-attachments/assets/9f43aab7-376e-46df-8475-c3dd1d4f7372" />
+
+
+
 
 ## ✨ Features
 
@@ -122,3 +131,4 @@ MIT — do whatever you want with it.
 ---
 
 *Built with curiosity and way too much time spent on CSS transitions.*
+
