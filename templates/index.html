@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prosperity Prognosticator — Startup Success Predictor</title>
+    <title>Startup's Success Predictor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -136,15 +136,15 @@
     <!-- HEADER -->
     <div class="header">
         <div class="logo">&#x1F680;</div>
-        <h1>Prosperity Prognosticator</h1>
-        <p>ML-powered startup success prediction system</p>
-        <span class="badge">RANDOM FOREST &nbsp;&middot;&nbsp; 79% ACCURACY</span>
+        <h1>Startup's Success Predictor</h1>
+        <p>Got a startup? Let's see if it's got what it takes.</p>
+        <span class="badge">79% Accuracy &nbsp;&middot;&nbsp; Random Forest Model</span>
     </div>
 
     <!-- GLOSSARY -->
     <div class="guide-box">
         <div class="guide-header" id="guideToggle" onclick="toggleGuide()">
-            <span class="left">&#x1F4D6;&nbsp; Confused about the terms? Click here for a quick guide</span>
+            <span class="left">&#x1F4D6;&nbsp; Not sure what some of these fields mean? Click here &mdash; we've got you covered</span>
             <span id="guideChevron" style="font-size:0.8rem">&#x25B2;</span>
         </div>
         <div class="guide-body" id="guideBody">
@@ -475,7 +475,7 @@
 
     <!-- FOOTER -->
     <div class="footer">
-        <p>Prosperity Prognosticator &mdash; Random Forest + Flask &nbsp;|&nbsp; Dataset: <a href="https://www.kaggle.com/datasets/manishkc06/startup-success-prediction" target="_blank">Kaggle Startups</a></p>
+        <p>Startup's Success Predictor &mdash; Built with Flask &nbsp;|&nbsp; Dataset: <a href="https://www.kaggle.com/datasets/manishkc06/startup-success-prediction" target="_blank">Kaggle Startups</a></p>
     </div>
 
 </div>
@@ -550,8 +550,8 @@
             const ok = result.prediction === 'SUCCESS';
             card.className = 'result-card ' + (ok ? 'success' : 'failure');
             document.getElementById('resultIcon').textContent = ok ? '\u2705' : '\u274C';
-            document.getElementById('resultLabel').textContent = ok ? 'HIGH POTENTIAL' : 'HIGH RISK';
-            document.getElementById('resultTitle').textContent = ok ? 'Likely to Succeed' : 'Likely to Fail';
+            document.getElementById('resultLabel').textContent = ok ? 'LOOKING GOOD' : 'NEEDS WORK';
+            document.getElementById('resultTitle').textContent = ok ? "You're on the right track!" : 'There\'s some work to do';
             const cv = document.getElementById('confValue');
             cv.textContent = result.confidence + '%';
             cv.style.color = ok ? 'var(--success)' : 'var(--danger)';

@@ -48,11 +48,11 @@ def predict():
         if prediction == 1:
             result = "SUCCESS"
             confidence = round(float(probability[1] * 100), 2)
-            message = "The startup has HIGH potential for success!"
+            message = "Your startup looks like it's heading in the right direction. Keep pushing!"
         else:
             result = "FAILURE"
             confidence = round(float(probability[0] * 100), 2)
-            message = "The startup has a HIGH risk of failure."
+            message = "The odds seem tough right now. A few key changes could make a real difference."
 
         return jsonify({
             'prediction': result,
