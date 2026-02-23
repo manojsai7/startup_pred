@@ -5,7 +5,8 @@
 A machine-learning web app that predicts whether a startup will succeed or fail — built with a Random Forest classifier trained on real-world Crunchbase startup data, served through a clean Flask backend, and wrapped in a glassmorphism UI designed to be understood by anyone, not just data scientists.
 
 ---
-
+## Demo video Link
+https://drive.google.com/file/d/1efuiXZKxvGLl3tBb0b8iOBRE052yycDB/view?usp=sharing
 ## 🎯 What does it actually do?
 
 You fill in a short form about your startup — how long it took to get funded, how many investors you have, how much money you've raised, where you're based — and the model gives you a **SUCCESS / FAILURE prediction** with a confidence score.
@@ -131,4 +132,5 @@ MIT — do whatever you want with it.
 ---
 
 *Built with curiosity and way too much time spent on CSS transitions.*
+
 
